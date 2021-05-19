@@ -9,9 +9,15 @@
   <meta name="description" content="Main page for searching books">
   <meta name="author" content="Fotios tsiskakis">
 
-  <!-- Include Handlebars from a CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
-  <script src="js/index.js"></script>
+  <meta charset="UTF-8">
+
+  <link rel="stylesheet" href="static/css/style.css">
+
+    <!-- JS code loaded and executed 
+            within the page -->
+    <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+
+  <script src="static/js/main.js"></script>
 
 </head>
 
@@ -26,18 +32,16 @@
   </ul>
   </nav>
   <main>
-  <form method ="post" action="#">
+  <form method ="GET" action="">
       <label for="bookTitle">Αναζήτηση βιβλίου:</label>
       <input type="text" id="bookTitle" name="bookTitle"><br><br>
-      <button id="submitButton">Αναζήτηση</button>
+      <button id="submitButton" onclick="sendBookTitle()">Αναζήτηση</button>
   </form>
   
-  
-  
+  <p id="results">placeholder</p>
+
   </main>
   <footer>
-    <p class="timeText">test2</p>
-    <p class="dateText">test</p>
     <p>Τσισκάκης Φώτιος - 3170162</p>
   </footer>
 </body>
