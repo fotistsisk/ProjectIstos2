@@ -1,20 +1,32 @@
 window.onload = function(){
     console.log("test");
-    var searchText = document.querySelector("#bookTitle").innerHTML;
+    var searchText = document.querySelector("#bookTitleInput");
     var searchButton = document.querySelector("#submitButton");
+    var url1;
     var results = document.querySelector("#results");
-    var url1 = "https://reststop.randomhouse.com/resources/works?keyword=Grisham%20Christmas";
     searchButton.onclick = function sendBookTitle(){
+        url1 = "https://reststop.randomhouse.com/resources/works?search="+searchText.value;
+        console.log(url1);
         let myHeaders = new Headers();
         myHeaders.append('Accept','application/json');
         let init = {
-            method: "GET",
-            accept: 'application/json'
+            METHOD: "GET",
+            headers : myHeaders
         };
         fetch(url1,init)
             .then(response=>{
-                console.log("Succeeded",response);
-                results.innerHTML = response;
+                console.log(response.headers.get("content-type"))
+                return response.json();
+            })
+            .then(data=>{
+                let books = data.work;
+                let resultsText ='';
+                for(i=0;i<books.length;i++){
+                    resultsText+=books[i].titleAuth;
+                }
+                
+                console.log("Succeeded",books.length);
+                results.innerHTML = resultsText;
             })
             .catch(error=>{
                 console.log(error);

@@ -13,9 +13,7 @@
 
   <link rel="stylesheet" href="static/css/style.css">
 
-    <!-- JS code loaded and executed 
-            within the page -->
-    <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+  <script src="static/node_modules/handlebars/dist/handlebars.js"></script>
 
   <script src="static/js/main.js"></script>
 
@@ -34,7 +32,7 @@
   <main>
   <form method ="GET" action="">
       <label for="bookTitle">Αναζήτηση βιβλίου:</label>
-      <input type="text" id="bookTitle" name="bookTitle"><br><br>
+      <input type="text" id="bookTitleInput" name="bookTitle"><br><br>
       <button id="submitButton" onclick="sendBookTitle()">Αναζήτηση</button>
   </form>
   
