@@ -1,12 +1,22 @@
 window.onload = function(){
-    console.log("test");
     var searchText = document.querySelector("#bookTitleInput");
     var searchButton = document.querySelector("#submitButton");
     var url1;
     var results = document.querySelector("#results");
     var booksTemplateHtml = document.querySelector('script[data-name="booksTemplate"]').innerHTML;
     var template = Handlebars.compile(booksTemplateHtml);
+    var resultsh2 = document.querySelector("#resultsh2");
     var books = [];
+    resultsh2.style.display = "none";
+
+
+    function toggleResultsHeader(){
+        if (resultsh2.style.display === "none") {
+            resultsh2.style.display = "block";
+        } 
+    }
+
+
     searchButton.onclick = function sendBookTitle(){
         url1 = "https://reststop.randomhouse.com/resources/works?search="+searchText.value;
         console.log(url1);
@@ -38,7 +48,8 @@ window.onload = function(){
                     books
                   })
 
-
+                toggleResultsHeader();
+                results.innerHTML = '';
                 results.innerHTML = bookData;
             })
             .catch(error=>{
@@ -47,4 +58,6 @@ window.onload = function(){
         return false;
     };
     
+
+
 }

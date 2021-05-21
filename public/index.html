@@ -17,6 +17,19 @@
 
   <script src="static/js/main.js"></script>
 
+  <script data-name="booksTemplate" type="text/x-handlebars-template">
+    
+    <article>
+      
+      {{#each books}}
+      <ul>
+        <li>{{title}}</li>
+      </ul>
+      {{/each}}
+
+    </article>
+  </script>
+
 </head>
 
 <body>
@@ -39,19 +52,11 @@
   </form>
   </section>
   <section>
-  <h2>Results:</h2>
-  <script data-name="booksTemplate" type="text/x-handlebars-template">
-    <article>
-      <ol>
-      {{#each books}}
-        <li>{{title}}</li>
-      {{/each}}
-      </ol>  
-    </article>
-  </script>
+  <h2 id="resultsh2" hidden>Results:</h2>
+  <p id="results"></p>
   </section>
 
-  <p id="results">placeholder</p>
+  
 
   </main>
   <footer>
