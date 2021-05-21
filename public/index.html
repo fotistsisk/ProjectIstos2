@@ -18,16 +18,22 @@
   <script src="static/js/main.js"></script>
 
   <script data-name="booksTemplate" type="text/x-handlebars-template">
-    
-    <article>
+    <ol>
       
+    
       {{#each books}}
+      <article>
+      <li>
       <ul>
         <li>{{title}}</li>
       </ul>
+      </li>
+      </article>
       {{/each}}
-
-    </article>
+    
+    </li>
+    </ol>
+    
   </script>
 
 </head>
