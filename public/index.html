@@ -13,7 +13,7 @@
 
   <link rel="stylesheet" href="static/css/style.css">
 
-  <script src="static/node_modules/handlebars/dist/handlebars.js"></script>
+  <script src="static/js/handlebars.js"></script>
 
   <script src="static/js/main.js"></script>
 
@@ -30,12 +30,27 @@
   </ul>
   </nav>
   <main>
+  <section>
+  <h2>Φόρμα αναζήτησης</h2>
   <form method ="GET" action="">
       <label for="bookTitle">Αναζήτηση βιβλίου:</label>
       <input type="text" id="bookTitleInput" name="bookTitle"><br><br>
       <button id="submitButton" onclick="sendBookTitle()">Αναζήτηση</button>
   </form>
-  
+  </section>
+  <section>
+  <h2>Results:</h2>
+  <script data-name="booksTemplate" type="text/x-handlebars-template">
+    <article>
+      <ol>
+      {{#each books}}
+        <li>{{title}}</li>
+      {{/each}}
+      </ol>  
+    </article>
+  </script>
+  </section>
+
   <p id="results">placeholder</p>
 
   </main>

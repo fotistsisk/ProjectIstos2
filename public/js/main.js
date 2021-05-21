@@ -4,6 +4,9 @@ window.onload = function(){
     var searchButton = document.querySelector("#submitButton");
     var url1;
     var results = document.querySelector("#results");
+    var booksTemplateHtml = document.querySelector('script[data-name="booksTemplate"]').innerHTML;
+    var template = Handlebars.compile(booksTemplateHtml);
+    var books = [];
     searchButton.onclick = function sendBookTitle(){
         url1 = "https://reststop.randomhouse.com/resources/works?search="+searchText.value;
         console.log(url1);
@@ -19,14 +22,24 @@ window.onload = function(){
                 return response.json();
             })
             .then(data=>{
-                let books = data.work;
-                let resultsText ='';
-                for(i=0;i<books.length;i++){
-                    resultsText+=books[i].titleAuth;
+                let dataWork = data.work;
+                let resultsText = [];
+                for(i=0;i<dataWork.length;i++){
+                    resultsText.push(dataWork[i].titleAuth);
                 }
                 
-                console.log("Succeeded",books.length);
-                results.innerHTML = resultsText;
+                console.log("Succeeded",dataWork.length);
+
+                resultsText.forEach(element =>{
+                    books.push({title : element})
+                });
+
+                var bookData = template({
+                    books
+                  })
+
+
+                results.innerHTML = bookData;
             })
             .catch(error=>{
                 console.log(error);
