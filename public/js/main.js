@@ -6,7 +6,7 @@ window.onload = function(){
     var booksTemplateHtml = document.querySelector('script[data-name="booksTemplate"]').innerHTML;
     var template = Handlebars.compile(booksTemplateHtml);
     var resultsh2 = document.querySelector("#resultsh2");
-    var books = [];
+    
     resultsh2.style.display = "none";
 
 
@@ -18,6 +18,7 @@ window.onload = function(){
 
 
     searchButton.onclick = function sendBookTitle(){
+        let books = [];
         url1 = "https://reststop.randomhouse.com/resources/works?search="+searchText.value;
         console.log(url1);
         let myHeaders = new Headers();
@@ -43,13 +44,12 @@ window.onload = function(){
                 resultsText.forEach(element =>{
                     books.push({title : element})
                 });
-
+                bookData = null;
                 var bookData = template({
                     books
                   })
 
                 toggleResultsHeader();
-                results.innerHTML = '';
                 results.innerHTML = bookData;
             })
             .catch(error=>{
