@@ -1,3 +1,30 @@
+function addToFavs(bookObject){
+  console.log(bookObject);
+  let urlFav = "http://localhost:8080/fav";
+  let myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+  let init = {
+    method: "POST",
+    headers: myHeaders,
+    body: JSON.stringify(bookObject)
+  };
+
+  fetch(urlFav,init)
+  .then(response=>{
+    if(response.status === 200){
+      console.log("Saved to favs");
+    }
+    else{
+      console.log("Already exists");
+    }
+  })
+  .catch(error=>{
+    console.log("ERROR ",error);
+  })
+  
+}
+
+
 window.onload = function () {
   var searchText = document.querySelector("#bookTitleInput");
   var searchButton = document.querySelector("#submitButton");
@@ -23,17 +50,13 @@ window.onload = function () {
     }
   }
 
-  function addToFavs(bookObject){
-    console.log(bookObject);
-    
-  }
+  
 
   searchButton.onclick = function sendBookTitle() {
     let books = [];
     url1 =
       "https://reststop.randomhouse.com/resources/works?search=" +
       searchText.value;
-    console.log(url1);
     let myHeaders = new Headers();
     myHeaders.append("Accept", "application/json");
     let init = {
@@ -52,13 +75,14 @@ window.onload = function () {
           resultsText.push({
             title: dataWork[i].titleweb,
             author: dataWork[i].authorweb,
+            bookID: dataWork[i].workid
           });
         }
 
         console.log("Succeeded", dataWork.length);
 
         resultsText.forEach((element) => {
-          books.push({ title: element.title, author: element.author });
+          books.push({ title: element.title, author: element.author, bookID: element.bookID});
         });
         bookData = null;
         var bookData = template({
