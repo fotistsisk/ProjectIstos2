@@ -57,8 +57,8 @@ app.use(function (req, res, next) {
 });
 
 app.post("/fav", function (req, res) {
-  console.log("DATA", req.body.bookID);
-  if (!checkBook(req.body.bookID)) {
+  if (!removeBook(req.body.bookID)) {
+    console.log("Book ", req.body.bookID," added");
     favBooks.push(req.body);
     res.sendStatus(200);
   }
@@ -68,10 +68,11 @@ app.post("/fav", function (req, res) {
 });
 
 //checks if the book is already in favs
-function checkBook(newBookID) {
+function removeBook(newBookID) {
   for (book of favBooks) {
     if (book.bookID === newBookID) {
-      console.log("Book ", newBookID, " already a fav");
+      favBooks = favBooks.filter(function(b) { return b.bookID != newBookID; });
+      console.log("Book ", newBookID, " removed");
       return true;
     }
   }

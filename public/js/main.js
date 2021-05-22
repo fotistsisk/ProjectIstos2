@@ -1,28 +1,34 @@
-function addToFavs(bookObject){
+function addRemoveToFavs(bookObject, button) {
+  console.log(button.innerHTML);
+
   let urlFav = "http://localhost:8080/fav";
   let myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("Content-Type", "application/json");
   let init = {
     method: "POST",
     headers: myHeaders,
-    body: JSON.stringify(bookObject)
+    body: JSON.stringify(bookObject),
   };
 
-  fetch(urlFav,init)
-  .then(response=>{
-    if(response.status === 200){
-      console.log("Saved to favs");
-    }
-    else{
-      alert("Το βιβλίο είναι ήδη στα αγαπημένα σας!");
-      console.log("Already exists");
-    }
-  })
-  .catch(error=>{
-    console.log("ERROR ",error);
-  })
+  fetch(urlFav, init)
+    .then((response) => {
+      if (response.status === 200) {
+        //alert("Προσθέθηκε στα αγαπημένα!");
+        console.log("Saved to favs");
+      } else {
+        //alert("Αφαιρέθηκε από τα αγαπημένα!");
+        console.log("removed from faves");
+      }
+      if (button.innerHTML === "Προσθήκη στα αγαπημένα") {
+        button.innerHTML = "Αφαίρεση από τα αγαπημένα";
+      } else{
+        button.innerHTML = "Προσθήκη στα αγαπημένα";
+      }
+    })
+    .catch((error) => {
+      console.log("ERROR ", error);
+    });
 }
-
 
 window.onload = function () {
   var searchText = document.querySelector("#bookTitleInput");
@@ -37,19 +43,15 @@ window.onload = function () {
 
   resultsh2.style.display = "none";
 
-  Handlebars.registerHelper('json', function(context) {
-    return JSON.stringify(context).replace(/"/g, '&quot;');
-});
-
-
+  Handlebars.registerHelper("json", function (context) {
+    return JSON.stringify(context).replace(/"/g, "&quot;");
+  });
 
   function toggleResultsHeader() {
     if (resultsh2.style.display === "none") {
       resultsh2.style.display = "block";
     }
   }
-
-  
 
   searchButton.onclick = function sendBookTitle() {
     let books = [];
@@ -74,14 +76,18 @@ window.onload = function () {
           resultsText.push({
             title: dataWork[i].titleweb,
             author: dataWork[i].authorweb,
-            bookID: dataWork[i].workid
+            bookID: dataWork[i].workid,
           });
         }
 
         console.log("Succeeded", dataWork.length);
 
         resultsText.forEach((element) => {
-          books.push({ title: element.title, author: element.author, bookID: element.bookID});
+          books.push({
+            title: element.title,
+            author: element.author,
+            bookID: element.bookID,
+          });
         });
         bookData = null;
         var bookData = template({
