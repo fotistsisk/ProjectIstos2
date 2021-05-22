@@ -12,32 +12,7 @@
   <meta charset="UTF-8">
 
   <link rel="stylesheet" href="/static/css/style.css">
-
-  <script src="/static/js/handlebars.js"></script>
-
-  <script src="/static/js/main.js"></script>
-
-  <script data-name="booksTemplate" type="text/x-handlebars-template">
-    <ol>
-      
-    
-      {{#each books}}
-      <article>
-      <li>
-        <p>ID: {{bookID}}<br>
-        Title: {{title}}<br>
-        Author: {{author}}
-        </p>
-        <button id="favButton" onclick="editBook({{{json this}}})" >Επεξεργασία στοιχείων</button>
-        <button id="favButton" onclick="removeFromFavs({{{json this}}})" >Αφαίρεση από τα αγαπημένα</button>
-      </li>
-      </article>
-      {{/each}}
-    
-    </li>
-    </ol>
-    
-  </script>
+  <script src="/static/js/editBook.js"></script>
 
 </head>
 
@@ -51,10 +26,18 @@
 </nav>
   <main>
     <h1>
-      Αποθηκευμένα Βιβλία
+      Επεξεργασία Στοιχείων Βιβλίου
     </h1>
   <p id="results"></p>
   </main>
+  <p id="idPar">ID :</p>
+  <form>
+    <label for="bookTitle">Title:</label>
+    <input type="text" id="bookTitle" name="bookTitle"><br>
+    <label for="bookAuthor">Author:</label>
+    <input type="text" id="bookAuthor" name="bookAuthor"><br>
+  </form>
+  <button id="editButton" onclick="updateBook()">Ενημέρωση στοιχείων</button>
   <footer>
     <p>Τσισκάκης Φώτιος - 3170162</p>
   </footer>

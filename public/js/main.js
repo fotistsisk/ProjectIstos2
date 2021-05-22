@@ -32,7 +32,7 @@ function removeFromFavs(bookObject) {
   let init = {
     method: "POST",
     headers: myHeaders,
-    body: JSON.stringify(bookObject),
+    body: JSON.stringify(bookObject)
   };
 
   fetch(urlFav, init)
@@ -46,9 +46,12 @@ function removeFromFavs(bookObject) {
     .catch((error) => {
       console.log("ERROR ", error);
     });
-    location.reload();
+  location.reload();
 }
 
+function editBook(book) {
+  window.location.replace("http://localhost:8080/static/editBook.html?id="+book.bookID);
+}
 
 window.onload = function () {
   var searchText = document.querySelector("#bookTitleInput");
@@ -100,7 +103,7 @@ window.onload = function () {
             books.push({
               title: dataWork[i].titleweb,
               author: dataWork[i].authorweb,
-              bookID: dataWork[i].workid
+              bookID: dataWork[i].workid,
             });
           }
 
@@ -108,7 +111,7 @@ window.onload = function () {
 
           bookData = null;
           var bookData = template({
-            books
+            books,
           });
 
           toggleResultsHeader();
@@ -123,7 +126,7 @@ window.onload = function () {
     getAllFavBooks();
   }
 
-  function getAllFavBooks(){
+  function getAllFavBooks() {
     let books = [];
     url1 = "http://localhost:8080/getAllFavs";
     let myHeaders = new Headers();
@@ -146,14 +149,14 @@ window.onload = function () {
           books.push({
             title: data[i].title,
             author: data[i].author,
-            bookID: data[i].bookID
+            bookID: data[i].bookID,
           });
         }
 
         console.log("Succeeded", resultsText);
         bookData = null;
         var bookData = template({
-          books
+          books,
         });
 
         results.innerHTML = bookData;
