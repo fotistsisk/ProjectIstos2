@@ -1,3 +1,5 @@
+var results;
+var template;
 function addToFavs(bookObject) {
   bookObject.type = "add";
   let urlFav = "http://localhost:8080/addRemoveFav";
@@ -44,18 +46,20 @@ function removeFromFavs(bookObject) {
     .catch((error) => {
       console.log("ERROR ", error);
     });
+    location.reload();
 }
+
 
 window.onload = function () {
   var searchText = document.querySelector("#bookTitleInput");
   var searchButton = document.querySelector("#submitButton");
   var url1;
-  var results = document.querySelector("#results");
+  results = document.querySelector("#results");
   var booksTemplateHtml = document.querySelector(
     'script[data-name="booksTemplate"]'
   ).innerHTML;
 
-  var template = Handlebars.compile(booksTemplateHtml);
+  template = Handlebars.compile(booksTemplateHtml);
   var resultsh2 = document.querySelector("#resultsh2");
 
   Handlebars.registerHelper("json", function (context) {
@@ -116,6 +120,10 @@ window.onload = function () {
       return false;
     };
   } else if (window.location.pathname === "/static/favorites.html") {
+    getAllFavBooks();
+  }
+
+  function getAllFavBooks(){
     let books = [];
     url1 = "http://localhost:8080/getAllFavs";
     let myHeaders = new Headers();
