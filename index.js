@@ -28,7 +28,7 @@ app.get("/", function (req, res) {
   };
 
   res.sendFile("index.html", options, function (err) {
-    console.log(err);
+    console.log("ERROR",err);
   });
 });
 
@@ -57,7 +57,7 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.post("/fav", function (req, res) {
+app.post("/addRemoveFav", function (req, res) {
   if (req.body.type === "add") {
     if (addBook(req.body)) {
       res.sendStatus(200);
@@ -106,3 +106,13 @@ function isBookInFaves(newBookID) {
   }
   return false;
 }
+
+
+app.get("/getAllFavs", function (req, res) {
+    if(favBooks.length === 0){
+        res.sendStatus(211)
+    } else{
+        res.header("Content-Type", "application/json");
+        res.send(JSON.stringify(favBooks));
+    }
+});

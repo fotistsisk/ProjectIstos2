@@ -17,17 +17,18 @@
 
   <script src="/static/js/main.js"></script>
 
-  <script data-name="booksTemplateFavs" type="text/x-handlebars-template">
+  <script data-name="booksTemplate" type="text/x-handlebars-template">
     <ol>
       
     
       {{#each books}}
       <article>
       <li>
-        <p>Title: {{title}}<br>
+        <p>ID: {{bookID}}<br>
+        Title: {{title}}<br>
         Author: {{author}}
         </p>
-        <button id="favButton" onclick="addRemoveToFavs({{{json this}}})" >Επεξεργασία στοιχείων</button>
+        <button id="favButton" onclick="addToFavs({{{json this}}})" >Επεξεργασία στοιχείων</button>
       </li>
       </article>
       {{/each}}
@@ -51,11 +52,7 @@
     <h1>
       Αποθηκευμένα Βιβλία
     </h1>
-  <section>
-  <h2 id="resultsh2Favs">Αποτελέσματα:</h2>
-  <p id="resultsFavs"></p>
-  </section>
-
+  <p id="results"></p>
   </main>
   <footer>
     <p>Τσισκάκης Φώτιος - 3170162</p>

@@ -1,6 +1,6 @@
 function addToFavs(bookObject) {
-  bookObject.type="add";
-  let urlFav = "http://localhost:8080/fav";
+  bookObject.type = "add";
+  let urlFav = "http://localhost:8080/addRemoveFav";
   let myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
   let init = {
@@ -22,9 +22,9 @@ function addToFavs(bookObject) {
     });
 }
 
-function removeFromFavs(bookObject){
-  bookObject.type="remove";
-  let urlFav = "http://localhost:8080/fav";
+function removeFromFavs(bookObject) {
+  bookObject.type = "remove";
+  let urlFav = "http://localhost:8080/addRemoveFav";
   let myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
   let init = {
@@ -55,11 +55,8 @@ window.onload = function () {
     'script[data-name="booksTemplate"]'
   ).innerHTML;
 
-  console.log(window.location.pathname);
   var template = Handlebars.compile(booksTemplateHtml);
   var resultsh2 = document.querySelector("#resultsh2");
-
-  resultsh2.style.display = "none";
 
   Handlebars.registerHelper("json", function (context) {
     return JSON.stringify(context).replace(/"/g, "&quot;");
@@ -71,11 +68,56 @@ window.onload = function () {
     }
   }
 
-  searchButton.onclick = function sendBookTitle() {
+  if (
+    window.location.pathname === "/static/index.html" ||
+    window.location.pathname === "/"
+  ) {
+    resultsh2.style.display = "none";
+
+    searchButton.onclick = function sendBookTitle() {
+      let books = [];
+      url1 =
+        "https://reststop.randomhouse.com/resources/works?search=" +
+        searchText.value;
+      let myHeaders = new Headers();
+      myHeaders.append("Accept", "application/json");
+      let init = {
+        METHOD: "GET",
+        headers: myHeaders,
+      };
+      fetch(url1, init)
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          let dataWork = data.work;
+          let resultsText = [];
+          for (i = 0; i < dataWork.length; i++) {
+            books.push({
+              title: dataWork[i].titleweb,
+              author: dataWork[i].authorweb,
+              bookID: dataWork[i].workid
+            });
+          }
+
+          console.log("Succeeded", dataWork.length);
+
+          bookData = null;
+          var bookData = template({
+            books
+          });
+
+          toggleResultsHeader();
+          results.innerHTML = bookData;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      return false;
+    };
+  } else if (window.location.pathname === "/static/favorites.html") {
     let books = [];
-    url1 =
-      "https://reststop.randomhouse.com/resources/works?search=" +
-      searchText.value;
+    url1 = "http://localhost:8080/getAllFavs";
     let myHeaders = new Headers();
     myHeaders.append("Accept", "application/json");
     let init = {
@@ -84,40 +126,33 @@ window.onload = function () {
     };
     fetch(url1, init)
       .then((response) => {
-        console.log(response.headers.get("content-type"));
+        if (response.status === 211) {
+          console.log("Favs array is empty");
+        }
         return response.json();
       })
       .then((data) => {
-        let dataWork = data.work;
+        console.log(data[0]);
         let resultsText = [];
-        for (i = 0; i < dataWork.length; i++) {
-          resultsText.push({
-            title: dataWork[i].titleweb,
-            author: dataWork[i].authorweb,
-            bookID: dataWork[i].workid,
+        for (i = 0; i < data.length; i++) {
+          books.push({
+            title: data[i].title,
+            author: data[i].author,
+            bookID: data[i].bookID
           });
         }
 
-        console.log("Succeeded", dataWork.length);
-
-        resultsText.forEach((element) => {
-          books.push({
-            title: element.title,
-            author: element.author,
-            bookID: element.bookID,
-          });
-        });
+        console.log("Succeeded", resultsText);
         bookData = null;
         var bookData = template({
-          books,
+          books
         });
 
-        toggleResultsHeader();
         results.innerHTML = bookData;
       })
       .catch((error) => {
         console.log(error);
       });
     return false;
-  };
+  }
 };
