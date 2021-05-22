@@ -11,11 +11,11 @@
 
   <meta charset="UTF-8">
 
-  <link rel="stylesheet" href="static/css/style.css">
+  <link rel="stylesheet" href="/static/css/style.css">
 
-  <script src="static/js/handlebars.js"></script>
+  <script src="/static/js/handlebars.js"></script>
 
-  <script src="static/js/main.js"></script>
+  <script src="/static/js/main.js"></script>
 
   <script data-name="booksTemplate" type="text/x-handlebars-template">
     <ol>
@@ -24,9 +24,11 @@
       {{#each books}}
       <article>
       <li>
-      <ul>
-        <li>{{title}}</li>
-      </ul>
+        <p>ID: {{bookID}}<br>
+        Title: {{title}}<br>
+        Author: {{author}}
+        </p>
+        <button id="favButton" onclick="addToFavs({{{json this}}})" >Προσθήκη στα αγαπημένα</button>
       </li>
       </article>
       {{/each}}
@@ -42,13 +44,14 @@
 </header>
 <nav>
   <ul>
-    <li><a href="index.html" class="active">Εισαγωγή</a></li>
-    <li><a href="dct.html">Block-Processing and DCT</a></li>
-    <li><a href="quantization.html">Quantization</a></li>
-    <li><a href="sign-up.html">Sign Up</a></li>
+    <li><a href="/static/index.html" class="active">Αναζήτηση</a></li>
+    <li><a href="/static/favorites.html">Αγαπημένα</a></li>
   </ul>
   </nav>
   <main>
+    <h1>
+      Αναζήτηση Βιβλίων
+    </h1>
   <section>
   <h2>Φόρμα αναζήτησης</h2>
   <form method ="GET" action="">
@@ -58,7 +61,7 @@
   </form>
   </section>
   <section>
-  <h2 id="resultsh2" hidden>Results:</h2>
+  <h2 id="resultsh2" hidden>Αποτελέσματα:</h2>
   <p id="results"></p>
   </section>
 

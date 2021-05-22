@@ -1,7 +1,9 @@
-const express = require('express')
-const path = require('path')
-const app = express()
-const port = 8080
+const express = require("express");
+const path = require("path");
+const fs = require("fs");
+const app = express();
+const port = 8080;
+var favBooks = [];
 
 app.listen(port);
 
@@ -10,7 +12,7 @@ app.listen(port);
     it will be accessible under path /static, 
     e.g. http://localhost:8080/static/index.html
 */
-app.use('/static', express.static(__dirname + '/public'));
+app.use("/static", express.static(__dirname + "/public"));
 
 // parse url-encoded content from body
 app.use(express.urlencoded({ extended: false }));
@@ -19,33 +21,59 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 // serve index.html as content root
-app.get('/', function(req, res){
+app.get("/", function (req, res) {
+  var options = {
+    root: path.join(__dirname, "public"),
+  };
 
-    var options = {
-        root: path.join(__dirname, 'public')
-    };
-
-    res.sendFile('index.html', options, function(err){
-        console.log(err)
-    });
-})
+  res.sendFile("index.html", options, function (err) {
+    console.log(err);
+  });
+});
 
 // Add headers
 app.use(function (req, res, next) {
+  // Website you wish to allow to connect
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:8080");
 
-    // Website you wish to allow to connect
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
+  // Request methods you wish to allow
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, OPTIONS, PUT, PATCH, DELETE"
+  );
 
-    // Request methods you wish to allow
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+  // Request headers you wish to allow
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "X-Requested-With,content-type"
+  );
 
-    // Request headers you wish to allow
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+  // Set to true if you need the website to include cookies in the requests sent
+  // to the API (e.g. in case you use sessions)
+  //res.setHeader('Access-Control-Allow-Credentials', true);
 
-    // Set to true if you need the website to include cookies in the requests sent
-    // to the API (e.g. in case you use sessions)
-    //res.setHeader('Access-Control-Allow-Credentials', true);
-
-    // Pass to next layer of middleware
-    next();
+  // Pass to next layer of middleware
+  next();
 });
+
+app.post("/fav", function (req, res) {
+  console.log("DATA", req.body.bookID);
+  if (!checkBook(req.body.bookID)) {
+    favBooks.push(req.body);
+    res.sendStatus(200);
+  }
+  else{
+    res.sendStatus(210);
+  }
+});
+
+//checks if the book is already in favs
+function checkBook(newBookID) {
+  for (book of favBooks) {
+    if (book.bookID === newBookID) {
+      console.log("Book ", newBookID, " already a fav");
+      return true;
+    }
+  }
+  return false;
+}

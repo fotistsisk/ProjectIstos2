@@ -1,5 +1,4 @@
 function addToFavs(bookObject){
-  console.log(bookObject);
   let urlFav = "http://localhost:8080/fav";
   let myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
@@ -15,13 +14,13 @@ function addToFavs(bookObject){
       console.log("Saved to favs");
     }
     else{
+      alert("Το βιβλίο είναι ήδη στα αγαπημένα σας!");
       console.log("Already exists");
     }
   })
   .catch(error=>{
     console.log("ERROR ",error);
   })
-  
 }
 
 

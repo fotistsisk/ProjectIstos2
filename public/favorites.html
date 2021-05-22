@@ -1,0 +1,76 @@
+<!doctype html>
+
+<html lang="gr">
+<head>
+  <meta charset="utf-8">
+
+  <title>Book Search</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">  
+  <meta name="description" content="Main page for searching books">
+  <meta name="author" content="Fotios tsiskakis">
+
+  <meta charset="UTF-8">
+
+  <link rel="stylesheet" href="/static/css/style.css">
+
+  <script src="/static/js/handlebars.js"></script>
+
+  <script src="/static/js/main.js"></script>
+
+  <script data-name="booksTemplate" type="text/x-handlebars-template">
+    <ol>
+      
+    
+      {{#each books}}
+      <article>
+      <li>
+        <p>Title: {{title}}<br>
+        Author: {{author}}
+        </p>
+        <button id="favButton" onclick="addToFavs({{{json this}}})" >Προσθήκη στα αγαπημένα</button>
+      </li>
+      </article>
+      {{/each}}
+    
+    </li>
+    </ol>
+    
+  </script>
+
+</head>
+
+<body>
+</header>
+<nav>
+  <ul>
+    <li><a href="index.html" class="active">Αναζήτηση</a></li>
+    <li><a href="favorites.html">Αγαπημένα</a></li>
+    <li><a href="quantization.html">Quantization</a></li>
+    <li><a href="sign-up.html">Sign Up</a></li>
+  </ul>
+  </nav>
+  <main>
+    <h1>
+      Αναζήτηση Βιβλίων
+    </h1>
+  <section>
+  <h2>Φόρμα αναζήτησης</h2>
+  <form method ="GET" action="">
+      <label for="bookTitle">Αναζήτηση βιβλίου:</label>
+      <input type="text" id="bookTitleInput" name="bookTitle"><br><br>
+      <button id="submitButton" onclick="sendBookTitle()">Αναζήτηση</button>
+  </form>
+  </section>
+  <section>
+  <h2 id="resultsh2" hidden>Αποτελέσματα:</h2>
+  <p id="results"></p>
+  </section>
+
+  
+
+  </main>
+  <footer>
+    <p>Τσισκάκης Φώτιος - 3170162</p>
+  </footer>
+</body>
+</html>

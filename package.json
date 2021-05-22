@@ -19,6 +19,8 @@
   "homepage": "https://github.com/fotistsisk/--------------2#readme",
   "dependencies": {
     "express": "^4.17.1",
-    "handlebars": "^4.7.7"
+    "handlebars": "^4.7.7",
+    "mongodb": "^3.6.8",
+    "mongoose": "^5.12.10"
   }
 }
