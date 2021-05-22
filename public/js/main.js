@@ -1,6 +1,5 @@
-function addRemoveToFavs(bookObject, button) {
-  console.log(button.innerHTML);
-
+function addToFavs(bookObject) {
+  bookObject.type="add";
   let urlFav = "http://localhost:8080/fav";
   let myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
@@ -13,16 +12,33 @@ function addRemoveToFavs(bookObject, button) {
   fetch(urlFav, init)
     .then((response) => {
       if (response.status === 200) {
-        //alert("Προσθέθηκε στα αγαπημένα!");
-        console.log("Saved to favs");
+        alert("Προσθέθηκε στα αγαπημένα!");
       } else {
-        //alert("Αφαιρέθηκε από τα αγαπημένα!");
-        console.log("removed from faves");
+        alert("Είναι ήδη στα αγαπημένα!");
       }
-      if (button.innerHTML === "Προσθήκη στα αγαπημένα") {
-        button.innerHTML = "Αφαίρεση από τα αγαπημένα";
-      } else{
-        button.innerHTML = "Προσθήκη στα αγαπημένα";
+    })
+    .catch((error) => {
+      console.log("ERROR ", error);
+    });
+}
+
+function removeFromFavs(bookObject){
+  bookObject.type="remove";
+  let urlFav = "http://localhost:8080/fav";
+  let myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+  let init = {
+    method: "POST",
+    headers: myHeaders,
+    body: JSON.stringify(bookObject),
+  };
+
+  fetch(urlFav, init)
+    .then((response) => {
+      if (response.status === 200) {
+        alert("Αφαιρέθηκε από τα αγαπημένα!");
+      } else {
+        alert("Δεν υπάρχει στα αγαπημένα!");
       }
     })
     .catch((error) => {
@@ -38,6 +54,8 @@ window.onload = function () {
   var booksTemplateHtml = document.querySelector(
     'script[data-name="booksTemplate"]'
   ).innerHTML;
+
+  console.log(window.location.pathname);
   var template = Handlebars.compile(booksTemplateHtml);
   var resultsh2 = document.querySelector("#resultsh2");
 

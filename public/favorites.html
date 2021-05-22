@@ -17,7 +17,7 @@
 
   <script src="/static/js/main.js"></script>
 
-  <script data-name="booksTemplate" type="text/x-handlebars-template">
+  <script data-name="booksTemplateFavs" type="text/x-handlebars-template">
     <ol>
       
     
@@ -27,7 +27,7 @@
         <p>Title: {{title}}<br>
         Author: {{author}}
         </p>
-        <button id="favButton" onclick="addRemoveToFavs({{{json this}}})" >Προσθήκη στα αγαπημένα</button>
+        <button id="favButton" onclick="addRemoveToFavs({{{json this}}})" >Επεξεργασία στοιχείων</button>
       </li>
       </article>
       {{/each}}
@@ -42,31 +42,19 @@
 <body>
 </header>
 <nav>
-  <ul>
-    <li><a href="index.html" class="active">Αναζήτηση</a></li>
-    <li><a href="favorites.html">Αγαπημένα</a></li>
-    <li><a href="quantization.html">Quantization</a></li>
-    <li><a href="sign-up.html">Sign Up</a></li>
-  </ul>
-  </nav>
+    <ul>
+      <li><a href="/static/index.html" class="active">Αναζήτηση</a></li>
+      <li><a href="/static/favorites.html">Αγαπημένα</a></li>
+    </ul>
+</nav>
   <main>
     <h1>
-      Αναζήτηση Βιβλίων
+      Αποθηκευμένα Βιβλία
     </h1>
   <section>
-  <h2>Φόρμα αναζήτησης</h2>
-  <form method ="GET" action="">
-      <label for="bookTitle">Αναζήτηση βιβλίου:</label>
-      <input type="text" id="bookTitleInput" name="bookTitle"><br><br>
-      <button id="submitButton" onclick="sendBookTitle()">Αναζήτηση</button>
-  </form>
+  <h2 id="resultsh2Favs">Αποτελέσματα:</h2>
+  <p id="resultsFavs"></p>
   </section>
-  <section>
-  <h2 id="resultsh2" hidden>Αποτελέσματα:</h2>
-  <p id="results"></p>
-  </section>
-
-  
 
   </main>
   <footer>

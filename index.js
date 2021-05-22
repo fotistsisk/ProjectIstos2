@@ -1,6 +1,7 @@
 const express = require("express");
 const path = require("path");
 const fs = require("fs");
+const e = require("express");
 const app = express();
 const port = 8080;
 var favBooks = [];
@@ -57,22 +58,49 @@ app.use(function (req, res, next) {
 });
 
 app.post("/fav", function (req, res) {
-  if (!removeBook(req.body.bookID)) {
-    console.log("Book ", req.body.bookID," added");
-    favBooks.push(req.body);
-    res.sendStatus(200);
-  }
-  else{
-    res.sendStatus(210);
+  if (req.body.type === "add") {
+    if (addBook(req.body)) {
+      res.sendStatus(200);
+    } else {
+      res.sendStatus(210);
+    }
+  } else {
+    if (removeBook(req.body)) {
+      res.sendStatus(200);
+    } else {
+      res.sendStatus(210);
+    }
   }
 });
 
+function addBook(newBook) {
+  if (isBookInFaves(newBook.bookID)) {
+    console.log("Book ", newBook.bookID, " already in favs");
+    return false;
+  } else {
+    console.log("Book ", newBook.bookID, " was added to favs");
+    favBooks.push(newBook);
+    return true;
+  }
+}
+
+function removeBook(newBook) {
+  if (isBookInFaves(newBook.bookID)) {
+    console.log("Book ", newBook.bookID, " removed from favs");
+    favBooks = favBooks.filter(function (b) {
+      return b.bookID != newBook.bookID;
+    });
+    return true;
+  } else {
+    console.log("Book ", newBook.bookID, " is not in favs");
+    return false;
+  }
+}
+
 //checks if the book is already in favs
-function removeBook(newBookID) {
+function isBookInFaves(newBookID) {
   for (book of favBooks) {
     if (book.bookID === newBookID) {
-      favBooks = favBooks.filter(function(b) { return b.bookID != newBookID; });
-      console.log("Book ", newBookID, " removed");
       return true;
     }
   }
