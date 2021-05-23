@@ -65,7 +65,6 @@ window.onload = function () {
       })
       .then((data) => {
         let dataWork = data.work;
-        let resultsText = [];
         for (i = 0; i < dataWork.length; i++) {
           books.push({
             title: dataWork[i].titleweb,
