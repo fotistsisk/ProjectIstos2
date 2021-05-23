@@ -30,14 +30,19 @@
     </h1>
   <p id="results"></p>
   </main>
-  <p id="idPar">ID :</p>
+  
   <form>
+    <label for="idPar">ID :</label>
+    <p id="idPar"></p>
     <label for="bookTitle">Title:</label>
     <input type="text" id="bookTitle" name="bookTitle"><br>
     <label for="bookAuthor">Author:</label>
     <input type="text" id="bookAuthor" name="bookAuthor"><br>
+    <label for="review">Κριτική :</label>
+    <textarea id="review" name="review" rows="5" cols="100"></textarea>
   </form>
   <button id="editButton" onclick="updateBook()">Ενημέρωση στοιχείων</button>
+  <button id="cancelButton" onclick="cancelUpdate()">Ακύρωση</button>
   <footer>
     <p>Τσισκάκης Φώτιος - 3170162</p>
   </footer>

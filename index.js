@@ -117,23 +117,26 @@ app.get("/getAllFavs", function (req, res) {
     }
 });
 
-app.get("/getAllFavs", function (req, res) {
-    if(favBooks.length === 0){
-        res.sendStatus(211)
-    } else{
-        res.header("Content-Type", "application/json");
-        res.send(JSON.stringify(favBooks));
-    }
-});
 
 app.get("/getbook/:id", function (req, res) {
     let id = req.params.id;
     for (book of favBooks) {
         if (book.bookID === id) {
-            res.header("Content-Type", "application/json");
             res.send(JSON.stringify(book));
         }
     }
-    res.sendStatus(212);
 });
 
+app.post("/editBook", function (req, res) {
+    let newBook = req.body;
+    for (book of favBooks) {
+      if (book.bookID === newBook.bookID) {
+          book.author = newBook.author;
+          book.title = newBook.title;
+          book.review = newBook.review;
+          res.sendStatus(200);
+          return;
+      }
+    }
+    res.sendStatus(212);
+});
