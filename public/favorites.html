@@ -24,10 +24,10 @@
       {{#each books}}
       <article>
       <li>
-        <p>ID: {{bookID}}<br>
-        Title: {{title}}<br>
-        Author: {{author}}
-        </p>
+        <p>ID: {{bookID}}</p>
+        <p>Title: {{title}}</p>
+        <p>Author: {{author}}</p>
+        <p>Review: {{review}}</p>
         <button id="favButton" onclick="editBook({{{json this}}})" >Επεξεργασία στοιχείων</button>
         <button id="favButton" onclick="removeFromFavs({{{json this}}})" >Αφαίρεση από τα αγαπημένα</button>
       </li>

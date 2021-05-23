@@ -60,22 +60,13 @@ window.onload = function () {
         return response.json();
       })
       .then((data) => {
-        console.log(data[0]);
-        let resultsText = [];
         for (i = 0; i < data.length; i++) {
-          books.push({
-            title: data[i].title,
-            author: data[i].author,
-            bookID: data[i].bookID,
-          });
+          books.push(data[i]);
         }
-
-        console.log("Succeeded", resultsText);
         bookData = null;
         var bookData = template({
-          books,
+            books,
         });
-
         results.innerHTML = bookData;
       })
       .catch((error) => {
