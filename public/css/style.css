@@ -1,7 +1,9 @@
 body{
-    background-color: aqua;
+    background: aqua url("books.jpg") no-repeat fixed center;
+    background-size: cover;
 }
 
 #resultsh2{
     background-color: yellow;
 }
+
