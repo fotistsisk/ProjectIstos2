@@ -1,45 +1,116 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@200&display=swap');
+
 body{
-    background: aqua url("books.jpg") no-repeat fixed center;
-    background-size: cover;
+  font-family: 'JetBrains Mono', monospace;
+  background: aqua url("books.jpg") no-repeat fixed center;
+  background-size: cover;
+  text-align: center; 
 }
 
-#resultsh2{
-    background-color: yellow;
+
+
+main,footer{
+  display:inline-block;
+  width: 50%;
+  margin: 0 auto;
+  border-radius: 25px;
+  border: 2px solid #000000;
+  background-color: rgba(255, 255, 255, 0.95);
+  margin-top: 1.5em;
 }
 
-nav{
-    width: 30%;
-    background-color: rgb(39, 39, 39);
-    overflow: hidden;
-    text-align: center;
-    margin: 0 auto;
-    padding: 0px;
-    border-radius: 10px;
-  }
-  nav li {
-    display: inline;
-    list-style-type: none;
-  }
-  nav ul {
-    padding: 10px;
-    margin: 0px;
-  }
-  
-  nav a {
-    border-radius: 10px;
-    display: inline-block;
-    color: #f2f2f2;
-    text-decoration: none;
-    font-size: 25px;
-    padding: 12px 14px 12px 14px;
-  }
-  
-  nav a:hover {
-    background-color: rgba(3, 255, 255, 0.55);
-    color: white;
-  }
-  
-  nav a.active {
-    background-color: rgba(72, 255, 0, 0.55);
-    color: white;
-  }
+
+h1{
+  font-size: 3em;
+}
+
+#idPar{
+  text-align: left;
+}
+
+#editForm{
+  display: inline-block;
+}
+
+#editForm label {
+  text-align: right;
+  clear: both;
+  float:left;
+  margin-right:15px;
+}
+
+#editForm input[type=text]{
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+}
+
+#resultsh2 {
+  margin: 0 auto;
+  justify-content: center;
+  text-align: center;
+  width: fit-content;
+  background-color: yellow;
+}
+
+ol,ul{
+  padding: 0;
+  list-style-type: none;
+} 
+
+main li{
+  border-bottom:2px dashed black;
+  padding-bottom: 2em;
+}
+main li:last-child { border-bottom: none; }
+
+form{
+  display: flex;
+  justify-content:center;
+  align-items: center;
+  margin: 0 auto;
+}
+
+form *{
+  margin: 1em;
+}
+
+nav {
+  width: fit-content;
+  background-color: rgb(39, 39, 39);
+  overflow: hidden;
+  text-align: center;
+  margin: 0 auto;
+  padding: 0px;
+  border-radius: 10px;
+}
+nav li {
+  display: inline;
+  text-align: center;
+}
+nav ul {
+  display: flex;
+  justify-content: space-evenly;
+  padding-left: 0px;
+}
+
+nav a {
+  border-radius: 10px;
+  display: inline-block;
+  color: #f2f2f2;
+  text-decoration: none;
+  font-size: 1.5em;
+  padding: 12px 14px 12px 14px;
+  margin: 6px 20px ;
+}
+
+nav a:hover {
+  background-color: rgba(3, 255, 255, 0.55);
+  color: white;
+}
+
+nav a.active {
+  background-color: rgba(72, 255, 0, 0.55);
+  color: white;
+}
+

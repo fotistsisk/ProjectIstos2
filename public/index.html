@@ -20,15 +20,17 @@
   <script data-name="booksTemplate" type="text/x-handlebars-template">
     <ol>
       {{#each books}}
-      <article>
+      
       <li>
+        <article>
         <p>ID: {{bookID}}<br>
         Title: {{title}}<br>
         Author: {{author}}
         </p>
         <button id="favButton" onclick="addToFavs({{{json this}}})" >Προσθήκη στα αγαπημένα</button>
-      </li>
       </article>
+      </li>
+      
       {{/each}}
     </ol>
   </script>
@@ -55,13 +57,13 @@
       <button id="submitButton" onclick="sendBookTitle()">Αναζήτηση</button>
   </form>
   </section>
-  <section>
+  <section id="noResults" hidden>
+    <h2>Δεν βρέθηκαν αποτελέσματα!</h2>
+  </section>
+  <section id="resultsSection">
   <h2 id="resultsh2" hidden>Αποτελέσματα:</h2>
   <p id="results"></p>
   </section>
-
-  
-
   </main>
   <footer>
     <p>Τσισκάκης Φώτιος - 3170162</p>

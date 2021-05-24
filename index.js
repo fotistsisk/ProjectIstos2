@@ -145,11 +145,8 @@ app.post("/searchFavBooks", function (req, res) {
   let requestText = req.body.imputText.toLowerCase();
   let results=[];
   for (book of favBooks) {
-    console.log(book.author.toLowerCase().includes(requestText));
-    console.log(book.title.toLowerCase().includes(requestText));
     if (book.author.toLowerCase().includes(requestText)||book.title.toLowerCase().includes(requestText)) {
         results.push(book);
-        console.log(book);
     }
   }
   res.header("Content-Type", "application/json");

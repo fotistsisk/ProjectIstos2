@@ -33,6 +33,7 @@ function toggleResultsHeader() {
 window.onload = function () {
   var searchText = document.querySelector("#bookTitleInput");
   var searchButton = document.querySelector("#submitButton");
+  var noResultsSection = document.querySelector("#noResults");
   var url1;
   results = document.querySelector("#results");
   var booksTemplateHtml = document.querySelector(
@@ -40,13 +41,13 @@ window.onload = function () {
   ).innerHTML;
 
   template = Handlebars.compile(booksTemplateHtml);
-  var resultsh2 = document.querySelector("#resultsh2");
+  var resultsSection = document.querySelector("#resultsSection");
 
   Handlebars.registerHelper("json", function (context) {
     return JSON.stringify(context).replace(/"/g, "&quot;");
   });
 
-  resultsh2.style.display = "none";
+  resultsSection.hidden = true;
 
   searchButton.onclick = function sendBookTitle() {
     let books = [];
@@ -65,6 +66,19 @@ window.onload = function () {
       })
       .then((data) => {
         let dataWork = data.work;
+        //console.log("Succeeded", dataWork.length);
+        if(dataWork==undefined){
+          noResultsSection.hidden = false;
+          resultsSection.hidden =true;
+          return;
+        } else{
+          resultsSection.hidden = false;
+          noResultsSection.hidden = true;
+        }
+        
+        
+
+        
         for (i = 0; i < dataWork.length; i++) {
           books.push({
             title: dataWork[i].titleweb,
@@ -73,7 +87,7 @@ window.onload = function () {
           });
         }
 
-        console.log("Succeeded", dataWork.length);
+        
 
         bookData = null;
         var bookData = template({

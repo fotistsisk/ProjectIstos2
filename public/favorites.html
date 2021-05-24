@@ -22,16 +22,18 @@
       
     
       {{#each books}}
-      <article>
+      
       <li>
+        <article>
         <p>ID: {{bookID}}</p>
         <p>Title: {{title}}</p>
         <p>Author: {{author}}</p>
         <p>Review: {{review}}</p>
         <button id="favButton" onclick="editBook({{{json this}}})" >Επεξεργασία στοιχείων</button>
         <button id="favButton" onclick="removeFromFavs({{{json this}}})" >Αφαίρεση από τα αγαπημένα</button>
-      </li>
       </article>
+      </li>
+      
       {{/each}}
 
     </ol>
@@ -59,6 +61,7 @@
     </form>
   </section>
   <section>
+    <h2 id="noResults">Δεν βρέθηκαν αποτελέσματα!</h2>
   <p id="results"></p>
 </section>
   </main>
