@@ -5,10 +5,13 @@ var urlParams;
 var page_type;
 var titleElement, authorElement, bookIDElement,reviewElement;
 var book;
+
+//send http request to server with the updated book details
 function updateBook() {
   let newTitle = titleElement.value;
   let newAuthor = authorElement.value;
   let newReview = reviewElement.value;
+  //check first if the user changed anything or not
   if (newTitle != book.title || newAuthor != book.author || newReview!= book.review) {
     book.title = newTitle;
     book.author = newAuthor;
@@ -39,21 +42,19 @@ function updateBook() {
     alert("Δεν κάνατε κάποια αλλαγή");
   }
 }
-
+//if the user hits cancel take him to the favorite's page
 function cancelUpdate(){
   window.location.replace("http://localhost:8080/static/favorites.html");
 }
 
-window.onload = function () {
-  titleElement = document.querySelector("#bookTitle");
-  authorElement = document.querySelector("#bookAuthor");
-  bookIDElement = document.querySelector("#idPar");
-  reviewElement = document.querySelector("#review");
+//send request to the server in order to get the book details
+function getBook(){
   queryString = window.location.search;
   urlParams = new URLSearchParams(queryString);
   let bookID = urlParams.get("id");
   let urlGet = "http://localhost:8080/getbook/" + bookID;
   let myHeaders = new Headers();
+
 
   myHeaders.append("Accept", "application/json");
   let init = {
@@ -81,4 +82,13 @@ window.onload = function () {
     .catch((error) => {
       console.log(error);
     });
+}
+
+window.onload = function () {
+  titleElement = document.querySelector("#bookTitle");
+  authorElement = document.querySelector("#bookAuthor");
+  bookIDElement = document.querySelector("#idPar");
+  reviewElement = document.querySelector("#review");
+
+  getBook(); //get the book details when the page is loaded
 };

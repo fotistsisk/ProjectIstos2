@@ -57,22 +57,27 @@ app.use(function (req, res, next) {
   next();
 });
 
+//handle requests to add or remove books based on type attribute
 app.post("/addRemoveFav", function (req, res) {
+  //if we want to add a book call addBook()
   if (req.body.type === "add") {
     if (addBook(req.body)) {
-      res.sendStatus(200);
+      res.sendStatus(200); //if the operation was successful then return code 200
     } else {
-      res.sendStatus(210);
+      res.sendStatus(210); //if the book was already in favs then return code 210
     }
   } else {
+    //if we want to remove a book call removeBook()
     if (removeBook(req.body)) {
-      res.sendStatus(200);
+      res.sendStatus(200); //if the operation was successful then return code 200
     } else {
-      res.sendStatus(210);
+      res.sendStatus(210); //if the operation was not successful then return code 210
     }
   }
 });
 
+//checks if the book is already in the array favBooks and adds it if it's not
+//eturns false if the book is already in the array else it returns true
 function addBook(newBook) {
   if (isBookInFaves(newBook.bookID)) {
     console.log("Book ", newBook.bookID, " already in favs");
@@ -83,7 +88,7 @@ function addBook(newBook) {
     return true;
   }
 }
-
+//checks if the book is already in favs and if it is then we romove it
 function removeBook(newBook) {
   if (isBookInFaves(newBook.bookID)) {
     console.log("Book ", newBook.bookID, " removed from favs");
@@ -97,7 +102,7 @@ function removeBook(newBook) {
   }
 }
 
-//checks if the book is already in favs
+//checks if the book is already in array favBooks
 function isBookInFaves(newBookID) {
   for (book of favBooks) {
     if (book.bookID === newBookID) {
@@ -107,17 +112,18 @@ function isBookInFaves(newBookID) {
   return false;
 }
 
-
+//handle getAllFavs requests
 app.get("/getAllFavs", function (req, res) {
     if(favBooks.length === 0){
-        res.sendStatus(211)
+        res.sendStatus(211) //if we don't have any fav books return status 211
     } else{
+      //else send the whole array in json format
         res.header("Content-Type", "application/json");
         res.send(JSON.stringify(favBooks));
     }
 });
 
-
+//sends the book information based on the id in the url
 app.get("/getbook/:id", function (req, res) {
     let id = req.params.id;
     for (book of favBooks) {
@@ -127,6 +133,7 @@ app.get("/getbook/:id", function (req, res) {
     }
 });
 
+//edits a book information
 app.post("/editBook", function (req, res) {
     let newBook = req.body;
     for (book of favBooks) {
@@ -138,9 +145,10 @@ app.post("/editBook", function (req, res) {
           return;
       }
     }
-    res.sendStatus(212);
+    res.sendStatus(212); //send status 212 if the book is not in favBooks
 });
 
+//returns an array of all the books that include a certain string(which is in the body of the request)
 app.post("/searchFavBooks", function (req, res) {
   let requestText = req.body.imputText.toLowerCase();
   let results=[];

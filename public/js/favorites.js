@@ -6,12 +6,14 @@ var searchImput;
 var timerID;
 var noResultsSection;
 
+//change html file based on the edit button we pressed
 function editBook(book) {
   window.location.replace(
     "http://localhost:8080/static/editBook.html?id=" + book.bookID
   );
 }
 
+//sends request to server using fetch to remove a certain book
 function removeFromFavs(bookObject) {
   bookObject.type = "remove";
   let urlFav = "http://localhost:8080/addRemoveFav";
@@ -37,6 +39,7 @@ function removeFromFavs(bookObject) {
   location.reload();
 }
 
+//sends request to server and handle the array in order to display the results
 function searchInFavs() {
   if (searchTitle.value == "") {
     results.hidden = false;
@@ -88,6 +91,7 @@ function searchInFavs() {
   return true;
 }
 
+//sends request to server and diplays all of the books in favBooks
 function getAllFavs() {
   let books = [];
   url1 = "http://localhost:8080/getAllFavs";
@@ -130,9 +134,10 @@ window.onload = function () {
     'script[data-name="booksTemplate"]'
   ).innerHTML;
 
+  //event listener to search after we have pressed a button insed the search bar
   bookTitleInput.addEventListener("keydown", function () {
-    clearTimeout(timerID);
-    timerID = setTimeout(searchInFavs, 500);
+    clearTimeout(timerID); //clear the last timeout to search once the urser stops typing
+    timerID = setTimeout(searchInFavs, 500); //run searchInFavs after half a second
   });
 
   template = Handlebars.compile(booksTemplateHtml);
@@ -141,5 +146,5 @@ window.onload = function () {
     return JSON.stringify(context).replace(/"/g, "&quot;");
   });
 
-  getAllFavs();
+  getAllFavs(); //get all of the favBooks when the html page loads
 };
